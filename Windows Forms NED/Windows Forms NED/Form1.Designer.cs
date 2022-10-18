@@ -88,7 +88,7 @@
             this.importtxtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.importtxtToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.importtxtToolStripMenuItem.Name = "importtxtToolStripMenuItem";
-            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.importtxtToolStripMenuItem.Text = "Import";
             this.importtxtToolStripMenuItem.Click += new System.EventHandler(this.importtxtToolStripMenuItem_Click);
             // 
@@ -97,7 +97,7 @@
             this.exportToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.exportToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 

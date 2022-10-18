@@ -127,6 +127,7 @@ namespace Windows_Forms_NED
         private void inputText_Update(object sender, EventArgs e)
         {
             inputText = richTextBox1.Text;
+            textCalc = richTextBox1.Text;
         }
 
         private void key_Update(object sender, EventArgs e)
@@ -142,6 +143,7 @@ namespace Windows_Forms_NED
             if (recursionValue.Text == "")
                 return;
             recursion = Convert.ToInt32(recursionValue.Text);
+            recursionCalc = recursion;
         }
 
         private void ProcessButton_Click(object sender, EventArgs e)
@@ -180,12 +182,7 @@ namespace Windows_Forms_NED
 
         void Encrypt(string encryptText, int additionKey, int recursion)
         {
-            //var watch = new System.Diagnostics.Stopwatch();
-            var progress = new System.Diagnostics.Stopwatch();
-
-            //watch.Start();
-
-            //Console.WriteLine("Encrypting '" + encryptText + "' with a key of: " + additionKey + " and a recursion of: " + recursion);
+            var efficiency = new System.Diagnostics.Stopwatch();
 
             textCalc = encryptText;
             recursionCalc = recursion;
@@ -199,7 +196,7 @@ namespace Windows_Forms_NED
             string splitOut = "";
             string punctuation = "";
 
-
+            efficiency.Start();
 
             for (int i = 0; i < recursion; i++)
             {
@@ -215,6 +212,9 @@ namespace Windows_Forms_NED
                     {
                         punctuation += encryptText[j];
                     }
+
+                    form2.IncremProg();
+                    form2.Refresh();
                 }
 
                 for (int k = 0; k < numberOut.Length; k++)
@@ -288,16 +288,14 @@ namespace Windows_Forms_NED
             form2.Close();
 
             //watch.Stop();
-            progress.Reset();
+            efficiency.Stop();
+            Console.WriteLine(efficiency.ElapsedMilliseconds);
 
             //var time = watch.ElapsedMilliseconds;
         }
 
         void Decrypt(string decryptText, int subtractionKey, int recursion)
         {
-            textCalc = decryptText;
-            recursionCalc = recursion;
-
             Form2 form2 = new Form2();
             form2.Show();
             form2.Refresh();
