@@ -192,8 +192,8 @@ namespace Windows_Forms_NED
             form2.Refresh();
 
             int letterIndex;
-            ///int[] numberOut = { };
-            List<int> numberOut = new List<int>();
+
+            Queue<int> numberOut = new Queue<int>();
             string splitOut = "";
             string punctuation = "";
 
@@ -205,10 +205,8 @@ namespace Windows_Forms_NED
                 {
                     letterIndex = alphabet.IndexOf(encryptText[j]);
                     Console.WriteLine(letterIndex);
-                    ///Array.Resize(ref numberOut, numberOut.Length + 1);
-                    ///numberOut[j] = letterIndex;
-
-                    numberOut.Add(letterIndex);
+                   
+                    numberOut.Enqueue(letterIndex);
                     // CONCATENATE INTEGERS NOT STRING TRY IT
 
                     if (letterIndex == -1)
@@ -220,7 +218,9 @@ namespace Windows_Forms_NED
                     form2.Refresh();
                 }
 
-                for (int k = 0; k < numberOut./*Length*/Count; k++)
+
+
+                /*for (int k = 0; k < numberOut.Count; k++)
                 {
                     if (numberOut[k] != -1)
                     {
@@ -234,6 +234,21 @@ namespace Windows_Forms_NED
                         splitOut += "-";
                     }
 
+                }*/
+
+                int val;
+
+                while(numberOut.Count < 0)
+                {
+                    val = numberOut.Peek();
+                    if(val != -1)
+                    {
+                        val += additionKey;
+                        splitOut += val.ToString();
+                    } else
+                    {
+                        splitOut += "-";
+                    }
                 }
 
                 encryptText = null;
