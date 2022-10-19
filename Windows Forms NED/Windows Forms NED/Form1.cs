@@ -220,6 +220,7 @@ namespace Windows_Forms_NED
 
                     form2.IncremProg();
                     form2.Refresh();
+                }
 
 
                 for (int k = 0; k < numberOut./*Length*/Count; k++)
@@ -234,9 +235,8 @@ namespace Windows_Forms_NED
                     {
                         Console.WriteLine("Punctuation Detected");
                         splitOut += "-";
+                    }
                 }
-
-                
 
                 encryptText = null;
                 int index = 0;
@@ -277,7 +277,9 @@ namespace Windows_Forms_NED
                         encryptText += " ";
                     }
                 }*/
-                numberOut = new int[0];
+
+                numberOut.Clear();
+                ///numberOut = new int[0];
                 //Console.WriteLine("array length: " + numberOut.Length);
             }
 
