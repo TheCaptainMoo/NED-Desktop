@@ -208,7 +208,7 @@ namespace Windows_Forms_NED
                     ///Array.Resize(ref numberOut, numberOut.Length + 1);
                     ///numberOut[j] = letterIndex;
 
-                    numberOut.Add(letterIndex);
+                    numberOut.Enqueue(letterIndex);
                     // CONCATENATE INTEGERS NOT STRING TRY IT
 
                     if (letterIndex == -1)
