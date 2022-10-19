@@ -170,7 +170,9 @@ namespace Windows_Forms_NED
             if (radioButton1.Checked == true)
             {
                 Form2.encrypt = true;
+                Console.Write(inputText);
                 Encrypt(inputText.ToUpper(), key, recursion);
+                
             }
             else
             {
@@ -184,8 +186,8 @@ namespace Windows_Forms_NED
         {
             var efficiency = new System.Diagnostics.Stopwatch();
 
-            textCalc = encryptText;
-            recursionCalc = recursion;
+            //textCalc = encryptText;
+            //recursionCalc = recursion;
 
             Form2 form2 = new Form2();
             form2.Show();
@@ -201,7 +203,7 @@ namespace Windows_Forms_NED
 
             for (int i = 0; i < recursion; i++)
             {
-                for (int j = 0; j < encryptText.Length; j++)
+                for (int j = 0; j < encryptText.Length; j++) //owo
                 {
                     letterIndex = alphabet.IndexOf(encryptText[j]);
                     Console.WriteLine(letterIndex);
@@ -249,6 +251,7 @@ namespace Windows_Forms_NED
                     {
                         splitOut += "-";
                     }
+                    numberOut.Dequeue();
                 }
 
                 encryptText = null;
