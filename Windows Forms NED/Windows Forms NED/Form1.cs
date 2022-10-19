@@ -170,9 +170,7 @@ namespace Windows_Forms_NED
             if (radioButton1.Checked == true)
             {
                 Form2.encrypt = true;
-                Console.Write(inputText);
                 Encrypt(inputText.ToUpper(), key, recursion);
-                
             }
             else
             {
@@ -194,8 +192,8 @@ namespace Windows_Forms_NED
             form2.Refresh();
 
             int letterIndex;
-            ///int[] numberOut = { };
-            List<int> numberOut = new List<int>();
+
+            Queue<int> numberOut = new Queue<int>();
             string splitOut = "";
             string punctuation = "";
 
@@ -203,7 +201,7 @@ namespace Windows_Forms_NED
 
             for (int i = 0; i < recursion; i++)
             {
-                for (int j = 0; j < encryptText.Length; j++) //owo
+                for (int j = 0; j < encryptText.Length; j++)
                 {
                     letterIndex = alphabet.IndexOf(encryptText[j]);
                     Console.WriteLine(letterIndex);
@@ -223,7 +221,7 @@ namespace Windows_Forms_NED
                 }
 
 
-                for (int k = 0; k < numberOut./*Length*/Count; k++)
+                /*for (int k = 0; k < numberOut.LengthCount; k++)
                 {
                     if (numberOut[k] != -1)
                     {
@@ -236,6 +234,23 @@ namespace Windows_Forms_NED
                         Console.WriteLine("Punctuation Detected");
                         splitOut += "-";
                     }
+
+                }*/
+
+                int val;
+
+                while(numberOut.Count > 0)
+                {
+                    val = numberOut.Peek();
+                    if(val != -1)
+                    {
+                        val += additionKey;
+                        splitOut += val.ToString();
+                    } else
+                    {
+                        splitOut += "-";
+                    }
+                    numberOut.Dequeue();
                 }
 
                 encryptText = null;
