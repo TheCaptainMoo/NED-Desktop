@@ -194,8 +194,8 @@ namespace Windows_Forms_NED
             form2.Refresh();
 
             int letterIndex;
-
-            Queue<int> numberOut = new Queue<int>();
+            ///int[] numberOut = { };
+            List<int> numberOut = new List<int>();
             string splitOut = "";
             string punctuation = "";
 
@@ -207,8 +207,10 @@ namespace Windows_Forms_NED
                 {
                     letterIndex = alphabet.IndexOf(encryptText[j]);
                     Console.WriteLine(letterIndex);
-                   
-                    numberOut.Enqueue(letterIndex);
+                    ///Array.Resize(ref numberOut, numberOut.Length + 1);
+                    ///numberOut[j] = letterIndex;
+
+                    numberOut.Add(letterIndex);
                     // CONCATENATE INTEGERS NOT STRING TRY IT
 
                     if (letterIndex == -1)
@@ -218,11 +220,9 @@ namespace Windows_Forms_NED
 
                     form2.IncremProg();
                     form2.Refresh();
-                }
 
 
-
-                /*for (int k = 0; k < numberOut.Count; k++)
+                for (int k = 0; k < numberOut./*Length*/Count; k++)
                 {
                     if (numberOut[k] != -1)
                     {
@@ -234,25 +234,9 @@ namespace Windows_Forms_NED
                     {
                         Console.WriteLine("Punctuation Detected");
                         splitOut += "-";
-                    }
-
-                }*/
-
-                int val;
-
-                while(numberOut.Count < 0)
-                {
-                    val = numberOut.Peek();
-                    if(val != -1)
-                    {
-                        val += additionKey;
-                        splitOut += val.ToString();
-                    } else
-                    {
-                        splitOut += "-";
-                    }
-                    numberOut.Dequeue();
                 }
+
+                
 
                 encryptText = null;
                 int index = 0;
@@ -293,9 +277,7 @@ namespace Windows_Forms_NED
                         encryptText += " ";
                     }
                 }*/
-
-                numberOut.Clear();
-                ///numberOut = new int[0];
+                numberOut = new int[0];
                 //Console.WriteLine("array length: " + numberOut.Length);
             }
 
@@ -305,7 +287,6 @@ namespace Windows_Forms_NED
             //Start();
             form2.Refresh();
 
-            richTextBox2.Text = encryptText;
             richTextBox2.Text = encryptText;
 
             form2.Close();
