@@ -192,8 +192,8 @@ namespace Windows_Forms_NED
             form2.Refresh();
 
             int letterIndex;
-
-            Queue<int> numberOut = new Queue<int>();
+            ///int[] numberOut = { };
+            List<int> numberOut = new List<int>();
             string splitOut = "";
             string punctuation = "";
 
@@ -208,7 +208,7 @@ namespace Windows_Forms_NED
                     ///Array.Resize(ref numberOut, numberOut.Length + 1);
                     ///numberOut[j] = letterIndex;
 
-                    numberOut.Enqueue(letterIndex);
+                    numberOut.Add(letterIndex);
                     // CONCATENATE INTEGERS NOT STRING TRY IT
 
                     if (letterIndex == -1)
@@ -218,10 +218,9 @@ namespace Windows_Forms_NED
 
                     form2.IncremProg();
                     form2.Refresh();
-                }
 
 
-                /*for (int k = 0; k < numberOut.LengthCount; k++)
+                for (int k = 0; k < numberOut.Count; k++)
                 {
                     if (numberOut[k] != -1)
                     {
@@ -234,24 +233,9 @@ namespace Windows_Forms_NED
                         Console.WriteLine("Punctuation Detected");
                         splitOut += "-";
                     }
-
-                }*/
-
-                int val;
-
-                while(numberOut.Count > 0)
-                {
-                    val = numberOut.Peek();
-                    if(val != -1)
-                    {
-                        val += additionKey;
-                        splitOut += val.ToString();
-                    } else
-                    {
-                        splitOut += "-";
-                    }
-                    numberOut.Dequeue();
                 }
+
+                
 
                 encryptText = null;
                 int index = 0;
