@@ -29,22 +29,29 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Defaults");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Generic", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Warnings");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Generic", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
             this.panel1 = new System.Windows.Forms.Panel();
             this.Save = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.Defaults = new System.Windows.Forms.TableLayoutPanel();
+            this.recValue = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Key = new System.Windows.Forms.Label();
             this.keyValue = new System.Windows.Forms.RichTextBox();
+            this.Warnings = new System.Windows.Forms.TableLayoutPanel();
+            this.cpw = new System.Windows.Forms.Label();
+            this.cpwBox = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.Defaults.SuspendLayout();
+            this.Warnings.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -72,6 +79,7 @@
             this.Save.TabIndex = 2;
             this.Save.Text = "Save";
             this.Save.UseVisualStyleBackColor = false;
+            this.Save.Click += new System.EventHandler(this.SaveSettings);
             // 
             // splitContainer1
             // 
@@ -88,7 +96,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Panel2.Controls.Add(this.Defaults);
+            this.splitContainer1.Panel2.Controls.Add(this.Warnings);
             this.splitContainer1.Size = new System.Drawing.Size(804, 382);
             this.splitContainer1.SplitterDistance = 268;
             this.splitContainer1.TabIndex = 1;
@@ -107,33 +116,53 @@
             treeNode1.Text = "Defaults";
             treeNode1.ToolTipText = "Defaults saved by the System";
             treeNode2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            treeNode2.ForeColor = System.Drawing.SystemColors.Window;
-            treeNode2.Name = "Generic";
-            treeNode2.Text = "Generic";
+            treeNode2.Name = "Warnings";
+            treeNode2.Text = "Warnings";
+            treeNode3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode3.ForeColor = System.Drawing.SystemColors.Window;
+            treeNode3.Name = "Generic";
+            treeNode3.Text = "Generic";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(268, 382);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
-            // tableLayoutPanel1
+            // Defaults
             // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.Key, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.keyValue, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 382);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.Defaults.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.Defaults.ColumnCount = 2;
+            this.Defaults.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Defaults.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Defaults.Controls.Add(this.recValue, 1, 1);
+            this.Defaults.Controls.Add(this.label1, 0, 1);
+            this.Defaults.Controls.Add(this.Key, 0, 0);
+            this.Defaults.Controls.Add(this.keyValue, 1, 0);
+            this.Defaults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Defaults.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.Defaults.Location = new System.Drawing.Point(0, 0);
+            this.Defaults.Name = "Defaults";
+            this.Defaults.RowCount = 3;
+            this.Defaults.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Defaults.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Defaults.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Defaults.Size = new System.Drawing.Size(532, 382);
+            this.Defaults.TabIndex = 0;
+            // 
+            // recValue
+            // 
+            this.recValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.recValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.recValue.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.recValue.ForeColor = System.Drawing.SystemColors.Window;
+            this.recValue.Location = new System.Drawing.Point(270, 32);
+            this.recValue.MaxLength = 2;
+            this.recValue.Multiline = false;
+            this.recValue.Name = "recValue";
+            this.recValue.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.recValue.Size = new System.Drawing.Size(257, 19);
+            this.recValue.TabIndex = 3;
+            this.recValue.Text = "1";
             // 
             // label1
             // 
@@ -173,6 +202,51 @@
             this.keyValue.Text = "1";
             this.keyValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumberOnly_KeyPress);
             // 
+            // Warnings
+            // 
+            this.Warnings.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.Warnings.ColumnCount = 2;
+            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Warnings.Controls.Add(this.cpw, 0, 0);
+            this.Warnings.Controls.Add(this.cpwBox, 1, 0);
+            this.Warnings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Warnings.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.Warnings.Location = new System.Drawing.Point(0, 0);
+            this.Warnings.Name = "Warnings";
+            this.Warnings.RowCount = 3;
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.Size = new System.Drawing.Size(532, 382);
+            this.Warnings.TabIndex = 3;
+            // 
+            // cpw
+            // 
+            this.cpw.AutoSize = true;
+            this.cpw.ForeColor = System.Drawing.SystemColors.Window;
+            this.cpw.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.cpw.Location = new System.Drawing.Point(5, 2);
+            this.cpw.Name = "cpw";
+            this.cpw.Size = new System.Drawing.Size(149, 15);
+            this.cpw.TabIndex = 0;
+            this.cpw.Text = "Character Process Warning";
+            // 
+            // cpwBox
+            // 
+            this.cpwBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.cpwBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cpwBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.cpwBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.cpwBox.Location = new System.Drawing.Point(270, 5);
+            this.cpwBox.MaxLength = 12;
+            this.cpwBox.Multiline = false;
+            this.cpwBox.Name = "cpwBox";
+            this.cpwBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.cpwBox.Size = new System.Drawing.Size(257, 19);
+            this.cpwBox.TabIndex = 2;
+            this.cpwBox.Text = "1";
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -189,8 +263,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.Defaults.ResumeLayout(false);
+            this.Defaults.PerformLayout();
+            this.Warnings.ResumeLayout(false);
+            this.Warnings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,10 +277,14 @@
         private Panel panel1;
         private SplitContainer splitContainer1;
         private TreeView treeView1;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel Defaults;
         private Label Key;
         private Label label1;
         private RichTextBox keyValue;
         private Button Save;
+        private RichTextBox recValue;
+        private TableLayoutPanel Warnings;
+        private Label cpw;
+        private RichTextBox cpwBox;
     }
 }

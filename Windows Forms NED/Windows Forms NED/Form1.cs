@@ -14,7 +14,8 @@ namespace Windows_Forms_NED
             key = Usersettings.Default.DefaultKey;
             recursionValue.Text = Usersettings.Default.DefaultRec.ToString();
             recursion = Usersettings.Default.DefaultRec;
-            keyValue.Text = "";
+
+            maxOutputWarning = Usersettings.Default.OutputWarning;
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +78,7 @@ namespace Windows_Forms_NED
             }
         }
 
-       
+
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -106,24 +107,7 @@ namespace Windows_Forms_NED
             }
         }
 
-
-
-
-
-        #region NED
-        //NED
-        string inputText;
-        int key;
-        int recursion;
-        bool safetyMeasure;
-
-        string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-
-        public static string textCalc;
-        public static int recursionCalc;
-        public static float totalTime;
-
+        // Process Functions
         private void inputText_Update(object sender, EventArgs e)
         {
             inputText = richTextBox1.Text;
@@ -135,7 +119,6 @@ namespace Windows_Forms_NED
             if (keyValue.Text == "")
                 return;
             key = Convert.ToInt32(keyValue.Text);
-            safetyMeasure = (key < 75) ? true : false;
         }
 
         private void recursion_Update(object sender, EventArgs e)
@@ -151,33 +134,71 @@ namespace Windows_Forms_NED
             Decider();
         }
 
+
+        #region NED
+        //NED
+        string inputText;
+        int key;
+        int recursion;
+        int maxOutputWarning;
+
+        readonly string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+        public static string textCalc;
+        public static int recursionCalc;
+        public static float totalTime;
+        public static int lettersToProcess;
+        
+
         void Decider()
         {
+            //Text Length Calculations
+            if (radioButton1.Checked)
+            {
+                lettersToProcess = textCalc.Count(c => Char.IsLetter(c)) * (int)Math.Pow(2, recursionCalc);
+            }
+            else
+            {
+                lettersToProcess = textCalc.Count(c => Char.IsLetter(c));
+                int tempLTP = lettersToProcess;
+                while (recursionCalc != 1)
+                {
+                    lettersToProcess += tempLTP / 2;
+                    tempLTP /= 2;
+                    recursionCalc--;
+                }
+            }
+
             //Key Verification
             if (key >= 75)
             {
                 MessageBox.Show("Key must be below 75", "Key Length Error");
                 return;
-            } else if(key <= 0)
+            }
+            else if (key <= 0)
             {
                 MessageBox.Show("Key must be above 0", "Key Length Error");
                 return;
             }
 
             //Recursion Warning
-
-
-            if (radioButton1.Checked == true)
+            if (lettersToProcess >= maxOutputWarning)
             {
-                Form2.encrypt = true;
+                if (MessageBox.Show("This will process " + lettersToProcess.ToString() + " characters. Do you want to continue?", "High Output Warning", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            if (radioButton1.Checked)
+            {
                 Encrypt(inputText.ToUpper(), key, recursion);
             }
             else
             {
-                Form2.encrypt = false;
                 Decrypt(inputText.ToUpper(), key, recursion);
             }
-
         }
 
         void Encrypt(string encryptText, int additionKey, int recursion)
@@ -218,6 +239,7 @@ namespace Windows_Forms_NED
 
                     form2.IncremProg();
                     form2.Refresh();
+                }
 
 
                 for (int k = 0; k < numberOut.Count; k++)
@@ -235,7 +257,7 @@ namespace Windows_Forms_NED
                     }
                 }
 
-                
+
 
                 encryptText = null;
                 int index = 0;

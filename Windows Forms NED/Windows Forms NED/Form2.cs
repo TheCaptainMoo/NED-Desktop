@@ -3,26 +3,24 @@
     public partial class Form2 : Form
     {
         public double ttCompletion;
-        int lettersToProcess;
-        public static bool encrypt = true;
 
         public Form2()
         {
             InitializeComponent();
 
-            if (encrypt)
+            /*if (encrypt)
             {
                 lettersToProcess = Form1.textCalc.Count(c => Char.IsLetter(c)) * (int)Math.Pow(2, Form1.recursionCalc);
             }
             else
             {
                 DecryptLTP();
-            }
+            }*/
 
-            progressBar1.Maximum = lettersToProcess;
+            progressBar1.Maximum = Form1.lettersToProcess;
         }
 
-        public void DecryptLTP()
+        /*public void DecryptLTP()
         {
             lettersToProcess = Form1.textCalc.Count(c => Char.IsLetter(c));
             int tempLTP = lettersToProcess;
@@ -32,7 +30,7 @@
                 tempLTP /= 2;
                 Form1.recursionCalc--;
             }
-        }
+        }*/
 
         public void IncremProg()
         {
