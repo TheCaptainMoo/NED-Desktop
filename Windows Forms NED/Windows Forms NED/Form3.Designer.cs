@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Defaults");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Warnings");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Generic", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Defaults");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Warnings");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Preview");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Generic", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7,
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Experimental");
             this.panel1 = new System.Windows.Forms.Panel();
             this.Save = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -45,6 +48,9 @@
             this.Warnings = new System.Windows.Forms.TableLayoutPanel();
             this.cpw = new System.Windows.Forms.Label();
             this.cpwBox = new System.Windows.Forms.RichTextBox();
+            this.Preview = new System.Windows.Forms.TableLayoutPanel();
+            this.prl = new System.Windows.Forms.Label();
+            this.prlBox = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -52,6 +58,7 @@
             this.splitContainer1.SuspendLayout();
             this.Defaults.SuspendLayout();
             this.Warnings.SuspendLayout();
+            this.Preview.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -96,8 +103,9 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.Defaults);
+            this.splitContainer1.Panel2.Controls.Add(this.Preview);
             this.splitContainer1.Panel2.Controls.Add(this.Warnings);
+            this.splitContainer1.Panel2.Controls.Add(this.Defaults);
             this.splitContainer1.Size = new System.Drawing.Size(804, 382);
             this.splitContainer1.SplitterDistance = 268;
             this.splitContainer1.TabIndex = 1;
@@ -110,20 +118,28 @@
             this.treeView1.ForeColor = System.Drawing.SystemColors.Window;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            treeNode1.ForeColor = System.Drawing.SystemColors.Window;
-            treeNode1.Name = "Defaults";
-            treeNode1.Text = "Defaults";
-            treeNode1.ToolTipText = "Defaults saved by the System";
-            treeNode2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            treeNode2.Name = "Warnings";
-            treeNode2.Text = "Warnings";
-            treeNode3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            treeNode3.ForeColor = System.Drawing.SystemColors.Window;
-            treeNode3.Name = "Generic";
-            treeNode3.Text = "Generic";
+            treeNode6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode6.ForeColor = System.Drawing.SystemColors.Window;
+            treeNode6.Name = "Defaults";
+            treeNode6.Text = "Defaults";
+            treeNode6.ToolTipText = "Defaults saved by the System";
+            treeNode7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode7.Name = "Warnings";
+            treeNode7.Text = "Warnings";
+            treeNode8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode8.Name = "Preview";
+            treeNode8.Text = "Preview";
+            treeNode9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode9.ForeColor = System.Drawing.SystemColors.Window;
+            treeNode9.Name = "Generic";
+            treeNode9.Text = "Generic";
+            treeNode10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            treeNode10.Name = "Experimental";
+            treeNode10.Text = "Experimental";
+            treeNode10.ToolTipText = "Experiemental Settings :O";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode9,
+            treeNode10});
             this.treeView1.Size = new System.Drawing.Size(268, 382);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -247,6 +263,51 @@
             this.cpwBox.TabIndex = 2;
             this.cpwBox.Text = "1";
             // 
+            // Preview
+            // 
+            this.Preview.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.Preview.ColumnCount = 2;
+            this.Preview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Preview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Preview.Controls.Add(this.prl, 0, 0);
+            this.Preview.Controls.Add(this.prlBox, 1, 0);
+            this.Preview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Preview.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.Preview.Location = new System.Drawing.Point(0, 0);
+            this.Preview.Name = "Preview";
+            this.Preview.RowCount = 3;
+            this.Preview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Preview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Preview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Preview.Size = new System.Drawing.Size(532, 382);
+            this.Preview.TabIndex = 4;
+            // 
+            // prl
+            // 
+            this.prl.AutoSize = true;
+            this.prl.ForeColor = System.Drawing.SystemColors.Window;
+            this.prl.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.prl.Location = new System.Drawing.Point(5, 2);
+            this.prl.Name = "prl";
+            this.prl.Size = new System.Drawing.Size(133, 15);
+            this.prl.TabIndex = 0;
+            this.prl.Text = "Preview Recursion Limit";
+            // 
+            // prlBox
+            // 
+            this.prlBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.prlBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.prlBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.prlBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.prlBox.Location = new System.Drawing.Point(270, 5);
+            this.prlBox.MaxLength = 2;
+            this.prlBox.Multiline = false;
+            this.prlBox.Name = "prlBox";
+            this.prlBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.prlBox.Size = new System.Drawing.Size(257, 19);
+            this.prlBox.TabIndex = 2;
+            this.prlBox.Text = "1";
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -267,6 +328,8 @@
             this.Defaults.PerformLayout();
             this.Warnings.ResumeLayout(false);
             this.Warnings.PerformLayout();
+            this.Preview.ResumeLayout(false);
+            this.Preview.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -286,5 +349,8 @@
         private TableLayoutPanel Warnings;
         private Label cpw;
         private RichTextBox cpwBox;
+        private TableLayoutPanel Preview;
+        private Label prl;
+        private RichTextBox prlBox;
     }
 }

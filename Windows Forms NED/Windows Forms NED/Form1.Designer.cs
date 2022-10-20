@@ -38,6 +38,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.previewCheckbox = new System.Windows.Forms.CheckBox();
             this.Preview = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -69,7 +70,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -81,7 +81,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             this.fileToolStripMenuItem.Text = "&File";
-            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // importtxtToolStripMenuItem
             // 
@@ -177,12 +176,22 @@
             // panel1
             // 
             this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.previewCheckbox);
             this.panel1.Controls.Add(this.Preview);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(392, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // previewCheckbox
+            // 
+            this.previewCheckbox.AutoSize = true;
+            this.previewCheckbox.Location = new System.Drawing.Point(110, 12);
+            this.previewCheckbox.Name = "previewCheckbox";
+            this.previewCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.previewCheckbox.TabIndex = 2;
+            this.previewCheckbox.UseVisualStyleBackColor = true;
             // 
             // Preview
             // 
@@ -351,5 +360,6 @@
         private ToolStripMenuItem importtxtToolStripMenuItem;
         private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
+        private CheckBox previewCheckbox;
     }
 }

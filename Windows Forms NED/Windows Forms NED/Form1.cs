@@ -18,21 +18,11 @@ namespace Windows_Forms_NED
             maxOutputWarning = Usersettings.Default.OutputWarning;
         }
 
-        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         //Open Settings Form
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3();
             form3.Show(Owner);
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         //Key Value
@@ -48,6 +38,7 @@ namespace Windows_Forms_NED
             }
         }
 
+        //Import Files
         private void importtxtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -78,8 +69,7 @@ namespace Windows_Forms_NED
             }
         }
 
-
-
+        //Export Files
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -107,11 +97,16 @@ namespace Windows_Forms_NED
             }
         }
 
-        // Process Functions
+        // Apply variables for processing
         private void inputText_Update(object sender, EventArgs e)
         {
             inputText = richTextBox1.Text;
             textCalc = richTextBox1.Text;
+
+
+            preview = previewCheckbox.Checked;
+            if(inputText != "" && preview)
+                PreviewCalc();
         }
 
         private void key_Update(object sender, EventArgs e)
@@ -128,19 +123,23 @@ namespace Windows_Forms_NED
             recursion = Convert.ToInt32(recursionValue.Text);
             recursionCalc = recursion;
         }
-
+        
         private void ProcessButton_Click(object sender, EventArgs e)
         {
             Decider();
+            
         }
 
 
         #region NED
-        //NED
+        //NED Processes
+
+        //Variable Declaration
         string inputText;
         int key;
         int recursion;
         int maxOutputWarning;
+        bool preview;
 
         readonly string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -150,7 +149,19 @@ namespace Windows_Forms_NED
         public static float totalTime;
         public static int lettersToProcess;
         
+        //Calculate Preview
+        void PreviewCalc()
+        {
+            if (radioButton1.Checked)
+            {
+                Encrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+            } else
+            {
+                Decrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+            }
+        }
 
+        //Process Info
         void Decider()
         {
             //Text Length Calculations
@@ -191,6 +202,8 @@ namespace Windows_Forms_NED
                 }
             }
 
+            //Process Text
+            preview = false;
             if (radioButton1.Checked)
             {
                 Encrypt(inputText.ToUpper(), key, recursion);
@@ -203,205 +216,211 @@ namespace Windows_Forms_NED
 
         void Encrypt(string encryptText, int additionKey, int recursion)
         {
-            var efficiency = new System.Diagnostics.Stopwatch();
-
-            //textCalc = encryptText;
-            //recursionCalc = recursion;
-
+            //Establish Form & Variables
             Form2 form2 = new Form2();
-            form2.Show();
+
+            if (preview != true)
+                form2.Show();
+
             form2.Refresh();
 
             int letterIndex;
-            ///int[] numberOut = { };
+            
             List<int> numberOut = new List<int>();
             string splitOut = "";
             string punctuation = "";
 
-            efficiency.Start();
 
-            for (int i = 0; i < recursion; i++)
+            try
             {
-                for (int j = 0; j < encryptText.Length; j++)
+                for (int i = 0; i < recursion; i++)
                 {
-                    letterIndex = alphabet.IndexOf(encryptText[j]);
-                    Console.WriteLine(letterIndex);
-                    ///Array.Resize(ref numberOut, numberOut.Length + 1);
-                    ///numberOut[j] = letterIndex;
-
-                    numberOut.Add(letterIndex);
-                    // CONCATENATE INTEGERS NOT STRING TRY IT
-
-                    if (letterIndex == -1)
+                    //Repeat Process Per Recursion
+                    for (int j = 0; j < encryptText.Length; j++)
                     {
-                        punctuation += encryptText[j];
+                        //Find the location of the letter in the alphabet
+                        letterIndex = alphabet.IndexOf(encryptText[j]);
+
+                        //Add location to list
+                        numberOut.Add(letterIndex);
+
+                        //Check if letter exists or punctuation
+                        if (letterIndex == -1)
+                        {
+                            punctuation += encryptText[j];
+                        }
+
+                        //Display Letter Processed
+                        form2.IncremProg();
+                        form2.Refresh();
                     }
 
-                    form2.IncremProg();
-                    form2.Refresh();
+
+                    for (int k = 0; k < numberOut.Count; k++)
+                    {
+                        //If Number is NOT punctuation
+                        if (numberOut[k] != -1)
+                        {
+                            //Add Key
+                            numberOut[k] += additionKey;
+                            splitOut += numberOut[k].ToString();
+                        }
+                        else
+                        {
+                            //Add Punctuation ID
+                            splitOut += "-";
+                        }
+                    }
+
+
+                    //Clear Entered Text
+                    encryptText = null;
+                    int index = 0;
+
+                    foreach (char c in splitOut)
+                    {
+                        //If character is NOT punctuation
+                        if (c != '-')
+                        {
+                            //Write Text
+                            encryptText += alphabet[int.Parse(c.ToString())];
+                        }
+                        else
+                        {
+                            //Write Punctuation
+                            encryptText += punctuation[index];
+                            index++;
+                        }
+                    }
+
+                    //Clear Split for next recursion
+                    splitOut = null;
+
+
+                    //Clear Number Output for next recursion
+                    numberOut.Clear();
+                    
                 }
-
-
-                for (int k = 0; k < numberOut.Count; k++)
+            } catch {
+                //Error Messages
+                if (preview)
                 {
-                    if (numberOut[k] != -1)
-                    {
-                        numberOut[k] += additionKey;
-                        Console.WriteLine("Number: " + numberOut[k]);
-                        splitOut += numberOut[k].ToString();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Punctuation Detected");
-                        splitOut += "-";
-                    }
+                    richTextBox2.Text = "Incorrect Recursion Length";
                 }
-
-
-
-                encryptText = null;
-                int index = 0;
-
-                foreach (char c in splitOut)
-                {
-                    Console.WriteLine(c);
-                    if (c != '-')
-                    {
-                        encryptText += alphabet[int.Parse(c.ToString())];
-                    }
-                    else
-                    {
-                        encryptText += punctuation[index];
-                        index++;
-                    }
-                }
-
-                //encryptText = encryptText.Remove(encryptText.Length - i, i);
-
-                //Console.WriteLine("Recursion " + i + ": " + encryptText);
-
-                //form2.UpdateText("Recursion " + i + ": " + encryptText);
-                splitOut = null;
-
-                //Console.WriteLine(numberOut);
-                /*encryptText = "";
-                Console.WriteLine(numberOut);
-                foreach (int letter in numberOut)
-                {
-                    Console.WriteLine(letter);
-                    if (letter != -1)
-                    {
-                        encryptText += alphabet[numberOut[letter]];
-                    }
-                    else
-                    {
-                        encryptText += " ";
-                    }
-                }*/
-
-                numberOut.Clear();
-                ///numberOut = new int[0];
-                //Console.WriteLine("array length: " + numberOut.Length);
+                else
+                    MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
             }
-
-            //Console.WriteLine(encryptText);
-
-            //Console.WriteLine("Noticed Punctuation: " + punctuation);
-            //Start();
             form2.Refresh();
 
+            //Output Text
             richTextBox2.Text = encryptText;
 
+            //Close Progress Bar
             form2.Close();
-
-            //watch.Stop();
-            efficiency.Stop();
-            Console.WriteLine(efficiency.ElapsedMilliseconds);
-
-            //var time = watch.ElapsedMilliseconds;
         }
 
         void Decrypt(string decryptText, int subtractionKey, int recursion)
         {
+            //Establish Form & Variables
             Form2 form2 = new Form2();
-            form2.Show();
+            if(preview != true)
+                form2.Show();
             form2.Refresh();
-
-            //Console.WriteLine("Decrypting '" + decryptText + "' with a key of: " + subtractionKey + " and a recursion of: " + recursion);
 
             string numberOut = "";
             int[] joinOut = new int[0];
             int loopLength = 0;
             string punctuation = "";
 
-            for (int i = 0; i < recursion; i++)
+            try
             {
-                for (int j = 0; j < decryptText.Length; j++)
+                for (int i = 0; i < recursion; i++)
                 {
-                    numberOut += alphabet.IndexOf(decryptText[j]);
-                    //Console.WriteLine(numberOut[j]);
-                    if (alphabet.IndexOf(decryptText[j]) == -1)
+                    //Repeat Process Per Recursion
+                    for (int j = 0; j < decryptText.Length; j++)
                     {
-                        punctuation += decryptText[j];
+                        //Convert input to numbers based on location
+                        numberOut += alphabet.IndexOf(decryptText[j]);
+
+                        //Check if character is punctuation
+                        if (alphabet.IndexOf(decryptText[j]) == -1)
+                        {
+                            punctuation += decryptText[j];
+                        }
+
+                        //Display Letter Processes
+                        form2.IncremProg();
+                        form2.Refresh();
                     }
 
-                    form2.IncremProg();
-                    form2.Refresh();
+                    //Clean output
+                    decryptText = "";
+                    loopLength = numberOut.Length;
+                    int index = 0;
+
+
+                    try
+                    {
+                        for (int j = 0; j < loopLength / 2; j++)
+                        {
+                            //If letter is NOT punctuation
+                            if (numberOut[0] != '-')
+                            {
+                                //Expand Array 
+                                Array.Resize(ref joinOut, joinOut.Length + 1);
+
+                                //Join 2 Numbers
+                                joinOut[j] = int.Parse(numberOut.Substring(0, 2));
+
+                                //Subtract key
+                                joinOut[j] -= subtractionKey;
+
+                                //Remove Joined Num. from array
+                                numberOut = numberOut.Remove(0, 2);
+
+                                //Convert Joined Num. to text
+                                decryptText += alphabet[joinOut[j]];
+                            }
+                            else
+                            {
+                                //Expand Array
+                                Array.Resize(ref joinOut, joinOut.Length + 1);
+
+                                //Remove Punctuation ID
+                                numberOut = numberOut.Remove(0, 2);
+
+                                //Add Punctuation to output
+                                decryptText += punctuation[index];
+
+                                //Move punctuation index
+                                index++;
+                            }
+                        }
+                    } catch
+                    {
+                        //Error Message
+                        MessageBox.Show("Incorrect Key/Recursion", "Length Error");
+                    }
+                    
+                    //Clean Outputs
+                    joinOut = new int[0];
+                    numberOut = "";
                 }
-
-                //numberOut = numberOut.Replace("-1", "-");
-                //Console.WriteLine("Replaced Output:" + numberOut);
-
-                decryptText = "";
-                loopLength = numberOut.Length;
-                int index = 0;
-
-                for (int j = 0; j < loopLength / 2; j++)
+            } catch {
+                //Error Messages
+                if (preview)
                 {
-                    //Console.WriteLine("Number: " + numberOut + " " + numberOut[0]);
-                    if (numberOut[0] != '-'/* && numberOut[1] != '1' || int.Parse(numberOut.Substring(0, 2)) < 0*/)
-                    {
-                        Array.Resize(ref joinOut, joinOut.Length + 1);
-
-                        //Console.WriteLine("Array Length: " + joinOut.Length);
-
-                        joinOut[j] = int.Parse(numberOut.Substring(0, 2));
-                        //Console.WriteLine("Parsed Results: " + joinOut[j]);
-                        joinOut[j] -= subtractionKey;
-                        numberOut = numberOut.Remove(0, 2);
-                        //Console.WriteLine("Join Out: " + joinOut[j]);
-
-                        decryptText += alphabet[joinOut[j]];
-                    }
-                    else
-                    {
-                        Array.Resize(ref joinOut, joinOut.Length + 1);
-                        numberOut = numberOut.Remove(0, 2);
-                        decryptText += punctuation[index];
-                        index++;
-                        //Console.WriteLine("Punctuation: " + decryptText);
-                    }
-                }
-
-                //Repair Output
-                int repairLength = punctuation.Length - index;
-                /*
-                for(int j = 0; j < repairLength; j++)
-                {
-                    decryptText += punctuation[index];
-                    index++;
-                }*/
-
-
-                //Console.WriteLine("Recursion " + i + ": " + decryptText);
-
-                joinOut = new int[0];
-                numberOut = "";
+                    richTextBox2.Text = "Incorrect Recursion Length";
+                } 
+                else
+                    MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
             }
             form2.Refresh();
 
+            //Write Text
             richTextBox2.Text = decryptText;
 
+            //Close Form
             form2.Close();
         }
 

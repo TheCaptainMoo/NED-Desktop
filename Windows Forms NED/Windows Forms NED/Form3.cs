@@ -2,8 +2,7 @@
 {
     public partial class Form3 : Form
     {
-        
-
+        //Load Existing Settings (Read Settings)
         public Form3()
         {
             InitializeComponent();
@@ -13,9 +12,10 @@
 
             cpwBox.Text = Usersettings.Default.OutputWarning.ToString();
 
-            
+            prlBox.Text = Usersettings.Default.PreviewRec.ToString();
         }
 
+        //Loop through all existing elements
         public static IEnumerable<Control> GetAllControls(Control control)
         {
             Stack<Control> stack = new Stack<Control>();
@@ -32,6 +32,7 @@
             }
         }
 
+        //Ensure the only value entered is a number
         private void NumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsDigit(e.KeyChar) || e.KeyChar == '\b')
@@ -44,12 +45,15 @@
             }
         }
 
+        //Write Settings
         private void SaveSettings(object sender, EventArgs e)
         {
             Usersettings.Default.DefaultKey = int.Parse(keyValue.Text);
             Usersettings.Default.DefaultRec = int.Parse(recValue.Text);
 
             Usersettings.Default.OutputWarning = int.Parse(cpwBox.Text);
+
+            Usersettings.Default.PreviewRec = int.Parse(prlBox.Text);
 
             Usersettings.Default.Save();
 
@@ -60,6 +64,7 @@
             }
         }
 
+        //Select Table
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             foreach (var tbl in GetAllControls(this).OfType<TableLayoutPanel>())
@@ -70,21 +75,6 @@
                     tbl.Visible = true;
                 }
             }
-            /*
-
-
-            if (treeView1.SelectedNode.ToString().Contains("Defaults"))
-            {
-                Defaults.Visible = true;
-                //Warnings.Visible = false;
-                //MessageBox.Show("Switching To Defaults");
-            } 
-            else if(treeView1.SelectedNode.ToString().Contains("Warnings"))
-            {
-                Warnings.Visible = true;
-                //DefaultsPanel.Visible = false;
-                //MessageBox.Show("Switching To Warnings");
-            }*/
         }
     }
 }

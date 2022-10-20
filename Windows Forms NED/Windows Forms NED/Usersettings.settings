@@ -11,8 +11,8 @@
     <Setting Name="OutputWarning" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100000</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="PreviewRec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
     </Setting>
   </Settings>
 </SettingsFile>
