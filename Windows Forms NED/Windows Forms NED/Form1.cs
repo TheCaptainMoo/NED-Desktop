@@ -1,11 +1,21 @@
 namespace Windows_Forms_NED
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Diagnostics;
+
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
         }
+
 
         //Initialise Settings
         private void Form1_Load(object sender, EventArgs e)
@@ -105,7 +115,7 @@ namespace Windows_Forms_NED
 
 
             preview = previewCheckbox.Checked;
-            if(inputText != "" && preview)
+            if (inputText != "" && preview)
                 PreviewCalc();
         }
 
@@ -130,6 +140,47 @@ namespace Windows_Forms_NED
             
         }
 
+        //Background Worker
+        private void bgWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (radioButton1.Checked)
+                {
+                    e.Result = Encrypt(inputText.ToUpper(), key, recursion);
+
+                }
+            else
+                {
+                    e.Result = Decrypt(inputText.ToUpper(), key, recursion);
+                }
+        }
+
+        private void bgWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message, "Error Detected");
+            }
+            else if (e.Cancelled)
+            {
+                richTextBox2.Text = "Operation Cancelled";
+            }
+            else if(e.Result != null)
+            {
+                richTextBox2.Text = e.Result.ToString();
+            }
+        }
+
+        void PreviewCalc()
+        {
+            if (radioButton1.Checked)
+            {
+                richTextBox2.Text = Encrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+            }
+            else
+            {
+                richTextBox2.Text = Decrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+            }
+        }
 
         #region NED
         //NED Processes
@@ -146,20 +197,7 @@ namespace Windows_Forms_NED
 
         public static string textCalc;
         public static int recursionCalc;
-        public static float totalTime;
         public static int lettersToProcess;
-        
-        //Calculate Preview
-        void PreviewCalc()
-        {
-            if (radioButton1.Checked)
-            {
-                Encrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
-            } else
-            {
-                Decrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
-            }
-        }
 
         //Process Info
         void Decider()
@@ -204,17 +242,12 @@ namespace Windows_Forms_NED
 
             //Process Text
             preview = false;
-            if (radioButton1.Checked)
-            {
-                Encrypt(inputText.ToUpper(), key, recursion);
-            }
-            else
-            {
-                Decrypt(inputText.ToUpper(), key, recursion);
-            }
+
+            if(!bgWorker.IsBusy)
+                bgWorker.RunWorkerAsync();
         }
 
-        void Encrypt(string encryptText, int additionKey, int recursion)
+        string Encrypt(string encryptText, int additionKey, int recursion)
         {
             //Establish Form & Variables
             Form2 form2 = new Form2();
@@ -230,7 +263,8 @@ namespace Windows_Forms_NED
             string splitOut = "";
             string punctuation = "";
 
-
+            
+           
             try
             {
                 for (int i = 0; i < recursion; i++)
@@ -312,14 +346,16 @@ namespace Windows_Forms_NED
             }
             form2.Refresh();
 
-            //Output Text
-            richTextBox2.Text = encryptText;
-
             //Close Progress Bar
             form2.Close();
+
+            
+
+            //Return Encrypted Text
+            return encryptText;
         }
 
-        void Decrypt(string decryptText, int subtractionKey, int recursion)
+        string Decrypt(string decryptText, int subtractionKey, int recursion)
         {
             //Establish Form & Variables
             Form2 form2 = new Form2();
@@ -417,13 +453,12 @@ namespace Windows_Forms_NED
             }
             form2.Refresh();
 
-            //Write Text
-            richTextBox2.Text = decryptText;
-
             //Close Form
             form2.Close();
-        }
 
+            //Return Decrypted Text
+            return decryptText;
+        }
 
     }
 }

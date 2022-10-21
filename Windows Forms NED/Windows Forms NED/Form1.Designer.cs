@@ -48,6 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.keyValue = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -305,6 +306,11 @@
             this.label1.Text = "Key:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // bgWorker
+            // 
+            this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
+            this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -361,5 +367,6 @@
         private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
         private CheckBox previewCheckbox;
+        private System.ComponentModel.BackgroundWorker bgWorker;
     }
 }
