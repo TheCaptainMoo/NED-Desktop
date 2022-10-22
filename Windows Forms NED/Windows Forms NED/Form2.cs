@@ -29,15 +29,15 @@ namespace Windows_Forms_NED
                 label1.Text = "Copying Output...";
             }
 
-            if (!backgroundWorker1.IsBusy)
-                backgroundWorker1.RunWorkerAsync();
+            //if (!backgroundWorker1.IsBusy)
+            //    backgroundWorker1.RunWorkerAsync();
 
-            label3.Text = ttCompletion.ToString() + " Seconds Remaining";
+            //label3.Text = ttCompletion.ToString() + " Seconds Remaining";
         }        
         
 
 
-        public int TimeLeft()
+        /*public int TimeLeft()
         {
             tempTime = progressBar1.Value;
 
@@ -54,14 +54,13 @@ namespace Windows_Forms_NED
                 ttCompletion++;
             }
 
-            
             TimeLeft();
             return ttCompletion;
-        }
+        }*/
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        /*private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            e.Result = TimeLeft();
+            //e.Result = TimeLeft();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -77,7 +76,7 @@ namespace Windows_Forms_NED
             {
                 label3.Text = ttCompletion.ToString() + " Seconds Remaining";
             }
-        }
+        }*/
     }
 }
 

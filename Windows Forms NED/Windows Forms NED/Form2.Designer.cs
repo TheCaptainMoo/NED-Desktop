@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -75,11 +74,7 @@
             this.label3.Size = new System.Drawing.Size(120, 15);
             this.label3.TabIndex = 4;
             this.label3.Text = "0 Seconds Remaining";
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.label3.Visible = false;
             // 
             // Form2
             // 
@@ -104,6 +99,5 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
