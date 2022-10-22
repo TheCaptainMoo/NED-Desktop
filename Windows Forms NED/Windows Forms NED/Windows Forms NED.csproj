@@ -4,10 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Windows_Forms_NED</RootNamespace>
-    <Nullable>enable</Nullable>
+    <Nullable>annotations</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>NED.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="NED.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Usersettings.Designer.cs">

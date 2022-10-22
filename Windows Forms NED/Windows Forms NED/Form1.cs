@@ -26,6 +26,8 @@ namespace Windows_Forms_NED
             recursion = Usersettings.Default.DefaultRec;
 
             maxOutputWarning = Usersettings.Default.OutputWarning;
+
+            this.Icon = new Icon("NED.ico");
         }
 
         //Open Settings Form
