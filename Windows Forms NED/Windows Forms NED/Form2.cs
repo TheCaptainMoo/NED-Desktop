@@ -42,7 +42,8 @@ namespace Windows_Forms_NED
             tempTime = progressBar1.Value;
 
             Thread.Sleep(1000);
-
+            
+            //Make it work
             difference = progressBar1.Value - tempTime;
             int temp = difference;
 

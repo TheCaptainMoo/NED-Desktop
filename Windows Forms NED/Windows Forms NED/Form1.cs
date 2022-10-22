@@ -211,6 +211,7 @@ namespace Windows_Forms_NED
         int recursion;
         int maxOutputWarning;
         bool preview;
+        bool isCompleted;
 
         readonly string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -268,7 +269,7 @@ namespace Windows_Forms_NED
 
             //Process Text
             preview = false;
-
+            isCompleted = false;
             
             bgWorker.RunWorkerAsync();
             ProcessButton.Text = "Cancel \nOperation";
@@ -296,7 +297,7 @@ namespace Windows_Forms_NED
             {
                 for (int i = 0; i < recursion; i++)
                 {
-                    while (!bgWorker.CancellationPending)
+                    while (!bgWorker.CancellationPending && !isCompleted)
                     {
                         //Repeat Process Per Recursion
                         for (int j = 0; j < encryptText.Length; j++)
@@ -362,8 +363,9 @@ namespace Windows_Forms_NED
 
                         //Clear Number Output for next recursion
                         numberOut.Clear();
-
+                        isCompleted = true;
                     }
+                    isCompleted = false;
                 }
             }
             catch
@@ -403,7 +405,7 @@ namespace Windows_Forms_NED
             int loopLength = 0;
             string punctuation = "";
 
-            while (!bgWorker.CancellationPending)
+            while (!bgWorker.CancellationPending && !isCompleted)
             {
                 try
                 {
@@ -481,7 +483,9 @@ namespace Windows_Forms_NED
                             //Clean Outputs
                             joinOut = new int[0];
                             numberOut = "";
+                            isCompleted = true;
                         }
+                        isCompleted = false;
                     }
                 }
                 catch
