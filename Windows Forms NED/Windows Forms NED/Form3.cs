@@ -1,4 +1,6 @@
-﻿namespace Windows_Forms_NED
+﻿using System.Configuration;
+
+namespace Windows_Forms_NED
 {
     public partial class Form3 : Form
     {
@@ -7,12 +9,17 @@
         {
             InitializeComponent();
 
-            keyValue.Text = Usersettings.Default.DefaultKey.ToString();
-            recValue.Text = Usersettings.Default.DefaultRec.ToString();
-
-            cpwBox.Text = Usersettings.Default.OutputWarning.ToString();
-
-            prlBox.Text = Usersettings.Default.PreviewRec.ToString();
+            foreach(SettingsProperty currentSetting in Usersettings.Default.Properties)
+            {
+                foreach(var rtb in GetAllControls(this).OfType<RichTextBox>())
+                {
+                    if(rtb.Name == currentSetting.Name)
+                    {
+                        rtb.Text = Usersettings.Default[currentSetting.Name].ToString();
+                    }
+                }
+                    
+            }
         }
 
         //Loop through all existing elements
@@ -32,6 +39,7 @@
             }
         }
 
+
         //Ensure the only value entered is a number
         private void NumberOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -48,12 +56,19 @@
         //Write Settings
         private void SaveSettings(object sender, EventArgs e)
         {
-            Usersettings.Default.DefaultKey = int.Parse(keyValue.Text);
-            Usersettings.Default.DefaultRec = int.Parse(recValue.Text);
-
-            Usersettings.Default.OutputWarning = int.Parse(cpwBox.Text);
-
-            Usersettings.Default.PreviewRec = int.Parse(prlBox.Text);
+            foreach(SettingsProperty currentSetting in Usersettings.Default.Properties)
+            {
+                foreach(RichTextBox rtb in GetAllControls(this).OfType<RichTextBox>())
+                {
+                    if (rtb.Name == currentSetting.Name)
+                    {
+                        if (currentSetting.PropertyType == typeof(int))
+                        {
+                            Usersettings.Default[currentSetting.Name] = int.Parse(rtb.Text);
+                        }
+                    }
+                }
+            }
 
             Usersettings.Default.Save();
 
