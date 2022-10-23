@@ -10,6 +10,7 @@
     <StartupObject></StartupObject>
     <ApplicationIcon>NED.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <BaseOutputPath>D:\User Files\Documents\GitHub\NED-Desktop\Windows Forms NED\Windows Forms NED\NEDApplication</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
