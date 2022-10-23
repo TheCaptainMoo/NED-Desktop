@@ -405,100 +405,89 @@ namespace Windows_Forms_NED
             int loopLength = 0;
             string punctuation = "";
 
-            while (!bgWorker.CancellationPending && !isCompleted)
+            try
             {
-                try
+                for (int i = 0; i < recursion; i++)
                 {
-                    for (int i = 0; i < recursion; i++)
+                    while (!bgWorker.CancellationPending && !isCompleted)
                     {
-                        while (!bgWorker.CancellationPending)
+                        //Repeat Process Per Recursion
+                        for (int j = 0; j < decryptText.Length; j++)
                         {
-                            //Repeat Process Per Recursion
-                            for (int j = 0; j < decryptText.Length; j++)
+                            //Convert input to numbers based on location
+                            numberOut += alphabet.IndexOf(decryptText[j]);
+
+                            //Check if character is punctuation
+                            if (alphabet.IndexOf(decryptText[j]) == -1)
                             {
-                                //Convert input to numbers based on location
-                                numberOut += alphabet.IndexOf(decryptText[j]);
-
-                                //Check if character is punctuation
-                                if (alphabet.IndexOf(decryptText[j]) == -1)
-                                {
-                                    punctuation += decryptText[j];
-                                }
-
-                                //Display Letter Processes
-                                form2.IncremProg();
-                                form2.Refresh();
+                                punctuation += decryptText[j];
                             }
 
-                            //Clean output
-                            decryptText = "";
-                            loopLength = numberOut.Length;
-                            int index = 0;
-
-
-                            try
-                            {
-                                for (int j = 0; j < loopLength / 2; j++)
-                                {
-                                    //If letter is NOT punctuation
-                                    if (numberOut[0] != '-')
-                                    {
-                                        //Expand Array 
-                                        Array.Resize(ref joinOut, joinOut.Length + 1);
-
-                                        //Join 2 Numbers
-                                        joinOut[j] = int.Parse(numberOut.Substring(0, 2));
-
-                                        //Subtract key
-                                        joinOut[j] -= subtractionKey;
-
-                                        //Remove Joined Num. from array
-                                        numberOut = numberOut.Remove(0, 2);
-
-                                        //Convert Joined Num. to text
-                                        decryptText += alphabet[joinOut[j]];
-                                    }
-                                    else
-                                    {
-                                        //Expand Array
-                                        Array.Resize(ref joinOut, joinOut.Length + 1);
-
-                                        //Remove Punctuation ID
-                                        numberOut = numberOut.Remove(0, 2);
-
-                                        //Add Punctuation to output
-                                        decryptText += punctuation[index];
-
-                                        //Move punctuation index
-                                        index++;
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                                //Error Message
-                                MessageBox.Show("Incorrect Key/Recursion", "Length Error");
-                            }
-
-                            //Clean Outputs
-                            joinOut = new int[0];
-                            numberOut = "";
-                            isCompleted = true;
+                            //Display Letter Processes
+                            form2.IncremProg();
+                            form2.Refresh();
                         }
-                        isCompleted = false;
+
+                        //Clean output
+                        decryptText = "";
+                        loopLength = numberOut.Length;
+                        int index = 0;
+
+                        for (int j = 0; j < loopLength / 2; j++)
+                        {
+                            //If letter is NOT punctuation
+                            if (numberOut[0] != '-')
+                            {
+                                //Expand Array 
+                                Array.Resize(ref joinOut, joinOut.Length + 1);
+
+                                //Join 2 Numbers
+                                joinOut[j] = int.Parse(numberOut.Substring(0, 2));
+
+                                //Subtract key
+                                joinOut[j] -= subtractionKey;
+
+                                //Remove Joined Num. from array
+                                numberOut = numberOut.Remove(0, 2);
+
+                                //Convert Joined Num. to text
+                                decryptText += alphabet[joinOut[j]];
+                            }
+                            else
+                            {
+                                //Expand Array
+                                Array.Resize(ref joinOut, joinOut.Length + 1);
+
+                                //Remove Punctuation ID
+                                numberOut = numberOut.Remove(0, 2);
+
+                                //Add Punctuation to output
+                                decryptText += punctuation[index];
+
+                                //Move punctuation index
+                                index++;
+                            }
+                        }
+
+                        //Clean Outputs
+                        joinOut = new int[0];
+                        numberOut = "";
+                        isCompleted = true;
                     }
-                }
-                catch
-                {
-                    //Error Messages
-                    if (preview)
-                    {
-                        richTextBox2.Text = "Incorrect Recursion Length";
-                    }
-                    else
-                        MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
+                    isCompleted = false;
                 }
             }
+            catch
+            {
+                //Error Messages
+                if (preview)
+                {
+                    richTextBox2.Text = "Incorrect Recursion Length";
+                }
+                else
+                    MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
+            }
+            
             form2.Refresh();
 
             //Close Form
