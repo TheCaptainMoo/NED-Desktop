@@ -15,7 +15,7 @@ In order for the NED application to operate properly, [.NET Runtime 6.0.8](https
 - High recursions are probably not good to use...
 
 ### Accessing The App
-- Locate .\bin\Debug\net6.0-windows\Windows Forms NED.exe
+- Locate .Windows Forms NED/NEDApplication/Debug/net6.0-windows/Windows Forms NED.exe
 - Windows Forms NED.exe
 - Have fun :D
 
