@@ -77,6 +77,7 @@ namespace Windows_Forms_NED
                         recursionValue.Text = strings[1];
                         richTextBox1.Text = strings[2];
                         richTextBox2.Text = strings[3];
+                        radioButton4.Checked = Convert.ToBoolean(strings[4]);
                         break;
 
                 }
@@ -104,7 +105,7 @@ namespace Windows_Forms_NED
                     //Ned Files
                     case 2:
                         StreamWriter sw1 = new StreamWriter(sfd.FileName);
-                        sw1.Write(keyValue.Text + "|" + recursionValue.Text + "|" + richTextBox1.Text + "|" + richTextBox2.Text);
+                        sw1.Write(keyValue.Text + "|" + recursionValue.Text + "|" + richTextBox1.Text + "|" + richTextBox2.Text + "|" + radioButton4.Checked);
                         sw1.Close();
                         break;
                 }
