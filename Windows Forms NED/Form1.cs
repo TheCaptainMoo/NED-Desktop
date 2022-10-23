@@ -28,6 +28,8 @@ namespace Windows_Forms_NED
             maxOutputWarning = Usersettings.Default.OutputWarning;
 
             this.Icon = new Icon("NED.ico");
+
+           
         }
 
         //Open Settings Form
@@ -163,13 +165,21 @@ namespace Windows_Forms_NED
             {
                 e.Cancel = true;
             }
-            if (radioButton1.Checked)
+            if (radioButton1.Checked && radioButton4.Checked)
             {
                 e.Result = Encrypt(inputText.ToUpper(), key, recursion);
             }
-            else
+            else if(!radioButton1.Checked && radioButton4.Checked)
             {
                 e.Result = Decrypt(inputText.ToUpper(), key, recursion);
+            } 
+            else if(radioButton1.Checked && !radioButton4.Checked)
+            {
+                e.Result = AsciiEncrypt(inputText, key, recursion);
+            }
+            else
+            {
+                e.Result = AsciiDecrypt(inputText, key, recursion);
             }
         }
 
@@ -226,11 +236,25 @@ namespace Windows_Forms_NED
             //Text Length Calculations
             if (radioButton1.Checked)
             {
-                lettersToProcess = textCalc.Count(c => Char.IsLetter(c)) * (int)Math.Pow(2, recursionCalc);
+                if (radioButton4.Checked)
+                {
+                    lettersToProcess = textCalc.Count(c => Char.IsLetter(c)) * (int)Math.Pow(2, recursionCalc);
+                }
+                else
+                {
+                    lettersToProcess = textCalc.Length * (int)Math.Pow(2, recursionCalc);
+                }
             }
             else
             {
-                lettersToProcess = textCalc.Count(c => Char.IsLetter(c));
+                if (radioButton4.Checked)
+                {
+                    lettersToProcess = textCalc.Count(c => Char.IsLetter(c));
+                }
+                else
+                {
+                    lettersToProcess = textCalc.Length;
+                }
                 int tempLTP = lettersToProcess;
                 while (recursionCalc != 1)
                 {
@@ -494,6 +518,119 @@ namespace Windows_Forms_NED
             form2.Close();
 
             //Return Decrypted Text
+            return decryptText;
+        }
+
+
+        string AsciiEncrypt(string encryptText, int additionKey, int recursion)
+        {
+            List<int> decimalOut = new List<int>();
+
+            Form2 form2 = new Form2();
+            form2.Show();
+            form2.Refresh();
+
+            try
+            {
+                for (int i = 0; i < recursion; i++)
+                {
+                    while (!bgWorker.CancellationPending && !isCompleted)
+                    {
+                        foreach (char c in encryptText)
+                        {
+                            decimalOut.Add((int)c + additionKey);
+                            form2.IncremProg();
+                            form2.Refresh();
+                        }
+
+                        //decimalOut.RemoveAt(0);
+                        encryptText = "";
+
+                        foreach (int dec in decimalOut)
+                        {
+                            encryptText += Convert.ToByte(dec).ToString("X");
+                        }
+
+                        decimalOut.Clear();
+                        isCompleted = true;
+                    }
+                    isCompleted = false;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("A process error occured.", "Error");
+            }
+
+            form2.Refresh();
+
+            //Close Progress Bar
+            form2.Close();
+
+            return encryptText;
+        }
+
+        string AsciiDecrypt(string decryptText, int subtractionKey, int recursion)
+        {
+            List<string> joined = new List<string>();
+            List<int> modified = new List<int>();
+
+            Form2 form2 = new Form2();
+            form2.Show();
+            form2.Refresh();
+
+            try
+            {
+                for (int j = 0; j < recursion; j++)
+                {
+                    while (!bgWorker.CancellationPending && !isCompleted)
+                    {
+
+                        int outputLength = decryptText.Length / 2;
+                        for (int i = 0; i < outputLength; i++)
+                        {
+                            joined.Add(decryptText.Substring(0, 2));
+                            decryptText = decryptText.Remove(0, 2);
+
+                            form2.IncremProg();
+                            form2.Refresh();
+                        }
+
+                        decryptText = "";
+
+                        foreach (string i in joined)
+                        {
+                            modified.Add(Convert.ToInt32(i, 16) - subtractionKey);
+                        }
+
+                        byte[] bytes = new byte[modified.Count];
+
+                        for (int i = 0; i < modified.Count; i++)
+                        {
+                            bytes[i] = Convert.ToByte(modified[i]);
+                        }
+
+                        decryptText = Encoding.ASCII.GetString(bytes);
+
+                        modified.Clear();
+                        joined.Clear();
+                        bytes = new byte[0];
+
+                        isCompleted = true;
+                    }
+                    isCompleted = false;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("A process error occured.", "Error");
+            }
+
+            form2.Refresh();
+
+            //Close Progress Bar
+            form2.Close();
+
             return decryptText;
         }
 
