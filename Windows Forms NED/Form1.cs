@@ -72,12 +72,20 @@ namespace Windows_Forms_NED
                         break;
 
                     case 2:
-                        string[] strings = result.Split('|');
-                        keyValue.Text = strings[0];
-                        recursionValue.Text = strings[1];
-                        richTextBox1.Text = strings[2];
-                        richTextBox2.Text = strings[3];
-                        radioButton4.Checked = Convert.ToBoolean(strings[4]);
+                        try
+                        {
+                            string[] strings = result.Split('|');
+                            keyValue.Text = strings[0];
+                            recursionValue.Text = strings[1];
+                            richTextBox1.Text = strings[2];
+                            richTextBox2.Text = strings[3];
+                            radioButton4.Checked = Convert.ToBoolean(strings[4]);
+                            radioButton3.Checked = !Convert.ToBoolean(strings[4]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Outdated File or Incorrect Format. Data may be lost. Re-exporting is recommended.", "File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                         break;
 
                 }
@@ -203,13 +211,21 @@ namespace Windows_Forms_NED
 
         void PreviewCalc()
         {
-            if (radioButton1.Checked)
+            if (radioButton1.Checked && radioButton4.Checked)
             {
-                richTextBox2.Text = Encrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+                richTextBox2.Text = Encrypt(inputText.ToUpper(), key, recursion);
+            }
+            else if (!radioButton1.Checked && radioButton4.Checked)
+            {
+                richTextBox2.Text = Decrypt(inputText.ToUpper(), key, recursion);
+            }
+            else if (radioButton1.Checked && !radioButton4.Checked)
+            {
+                richTextBox2.Text = AsciiEncrypt(inputText, key, recursion);
             }
             else
             {
-                richTextBox2.Text = Decrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.PreviewRec));
+                richTextBox2.Text = AsciiDecrypt(inputText, key, recursion);
             }
         }
 
@@ -528,7 +544,9 @@ namespace Windows_Forms_NED
             List<int> decimalOut = new List<int>();
 
             Form2 form2 = new Form2();
-            form2.Show();
+            if(preview != true)
+                form2.Show();
+
             form2.Refresh();
 
             try
@@ -577,7 +595,8 @@ namespace Windows_Forms_NED
             List<int> modified = new List<int>();
 
             Form2 form2 = new Form2();
-            form2.Show();
+            if (preview != true)
+                form2.Show();
             form2.Refresh();
 
             try

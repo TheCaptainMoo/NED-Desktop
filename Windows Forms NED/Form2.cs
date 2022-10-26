@@ -16,6 +16,8 @@ namespace Windows_Forms_NED
             InitializeComponent();
 
             progressBar1.Maximum = Form1.lettersToProcess;
+
+            this.Icon = new Icon("NED.ico");
         }
 
         //Increment Progress Bar

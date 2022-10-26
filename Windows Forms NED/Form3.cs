@@ -9,7 +9,9 @@ namespace Windows_Forms_NED
         {
             InitializeComponent();
 
-            foreach(SettingsProperty currentSetting in Usersettings.Default.Properties)
+            this.Icon = new Icon("NED.ico");
+
+            foreach (SettingsProperty currentSetting in Usersettings.Default.Properties)
             {
                 foreach(var rtb in GetAllControls(this).OfType<RichTextBox>())
                 {
@@ -18,7 +20,17 @@ namespace Windows_Forms_NED
                         rtb.Text = Usersettings.Default[currentSetting.Name].ToString();
                     }
                 }
-                    
+                
+                foreach(var cbb in GetAllControls(this).OfType<ComboBox>())
+                {
+                    if(cbb.Name == currentSetting.Name)
+                    {
+                        if (cbb.Items.Contains("True"))
+                        {
+                            cbb.Text = Usersettings.Default[currentSetting.Name].ToString();
+                        }
+                    }
+                }
             }
         }
 
@@ -53,6 +65,11 @@ namespace Windows_Forms_NED
             }
         }
 
+        public void Halt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled=false;
+        }
+
         //Write Settings
         private void SaveSettings(object sender, EventArgs e)
         {
@@ -65,6 +82,17 @@ namespace Windows_Forms_NED
                         if (currentSetting.PropertyType == typeof(int))
                         {
                             Usersettings.Default[currentSetting.Name] = int.Parse(rtb.Text);
+                        }
+                    }
+                }
+
+                foreach (var cbb in GetAllControls(this).OfType<ComboBox>())
+                {
+                    if (cbb.Name == currentSetting.Name)
+                    {
+                        if (cbb.Items.Contains("True"))
+                        {
+                            Usersettings.Default[currentSetting.Name] = Convert.ToBoolean(cbb.Text);
                         }
                     }
                 }
