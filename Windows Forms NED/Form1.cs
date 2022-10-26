@@ -29,7 +29,27 @@ namespace Windows_Forms_NED
 
             this.Icon = new Icon("NED.ico");
 
-           
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(pictureBox1, "Swap Input/Output");
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            string temp = richTextBox2.Text;
+
+            richTextBox2.Text = richTextBox1.Text;
+            richTextBox1.Text = temp;
+
+            if (radioButton1.Checked)
+            {
+                radioButton1.Checked = false;
+                radioButton2.Checked = true;
+            }
+            else
+            {
+                radioButton1.Checked = true;
+                radioButton2.Checked = false;
+            }
         }
 
         //Open Settings Form
