@@ -35,11 +35,9 @@ namespace Windows_Forms_NED
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            string temp = richTextBox2.Text;
-
-            richTextBox2.Text = richTextBox1.Text;
-            richTextBox1.Text = temp;
-
+            (richTextBox1.Text, richTextBox2.Text) = (richTextBox2.Text, richTextBox1.Text);
+            
+            
             if (radioButton1.Checked)
             {
                 radioButton1.Checked = false;
@@ -393,12 +391,12 @@ namespace Windows_Forms_NED
                             {
                                 //Add Key
                                 numberOut[k] += additionKey;
-                                splitOut.Append(numberOut[k].ToString());
+                                splitOut.Append(numberOut[k]);
                             }
                             else
                             {
                                 //Add Punctuation ID
-                                splitOut.Append("-");
+                                splitOut.Append('-');
                             }
                         }
 
