@@ -711,7 +711,10 @@ namespace Windows_Forms_NED
 
                             form2.IncremProg();
                             
-
+                            if(i % 200 == 0)
+                            {
+                                form2.Update();
+                            }
                         }
 
                         decryptText = "";
