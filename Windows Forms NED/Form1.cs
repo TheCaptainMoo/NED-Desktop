@@ -290,7 +290,7 @@ namespace Windows_Forms_NED
                 }
                 else
                 {
-                    lettersToProcess = textCalc.Length;
+                    lettersToProcess = textCalc.Length / 2;
                 }
                 int tempLTP = lettersToProcess;
                 while (recursionCalc != 1)
@@ -349,11 +349,11 @@ namespace Windows_Forms_NED
             int letterIndex;
             
             List<int> numberOut = new List<int>();
-            string splitOut = "";
-            string punctuation = "";
 
+            StringBuilder splitOut = new StringBuilder();
+            StringBuilder punctuation = new StringBuilder();
+            StringBuilder eText = new StringBuilder();
 
-            
             try
             {
                 for (int i = 0; i < recursion; i++)
@@ -372,14 +372,19 @@ namespace Windows_Forms_NED
                             //Check if letter exists or punctuation
                             if (letterIndex == -1)
                             {
-                                punctuation += encryptText[j];
+                                punctuation.Append(encryptText[j]);
                             }
 
                             //Display Letter Processed
                             form2.IncremProg();
-                            form2.Refresh();
+                            
+                            if(j % 1000 == 0)
+                            {
+                                form2.Update();
+                            }
                         }
 
+                        
 
                         for (int k = 0; k < numberOut.Count; k++)
                         {
@@ -388,39 +393,41 @@ namespace Windows_Forms_NED
                             {
                                 //Add Key
                                 numberOut[k] += additionKey;
-                                splitOut += numberOut[k].ToString();
+                                splitOut.Append(numberOut[k].ToString());
                             }
                             else
                             {
                                 //Add Punctuation ID
-                                splitOut += "-";
+                                splitOut.Append("-");
                             }
                         }
 
 
                         //Clear Entered Text
                         encryptText = null;
+                        eText.Clear();
                         int index = 0;
 
-                        foreach (char c in splitOut)
+                        foreach (char c in splitOut.ToString())
                         {
                             //If character is NOT punctuation
                             if (c != '-')
                             {
                                 //Write Text
-                                encryptText += alphabet[int.Parse(c.ToString())];
+                                eText.Append(alphabet[int.Parse(c.ToString())]);
                             }
                             else
                             {
                                 //Write Punctuation
-                                encryptText += punctuation[index];
+                                eText.Append(punctuation[index]);
                                 index++;
                             }
                         }
 
                         //Clear Split for next recursion
-                        splitOut = null;
+                        splitOut = new StringBuilder();
 
+                        encryptText = eText.ToString();
 
                         //Clear Number Output for next recursion
                         numberOut.Clear();
@@ -442,7 +449,7 @@ namespace Windows_Forms_NED
             
 
 
-            form2.Refresh();
+            //form2.Refresh();
 
             //Close Progress Bar
             form2.Close();
@@ -461,10 +468,15 @@ namespace Windows_Forms_NED
                 form2.Show();
             form2.Refresh();
 
-            string numberOut = "";
-            int[] joinOut = new int[0];
+            //string numberOut = "";
+            //int[] joinOut = new int[0];
             int loopLength = 0;
-            string punctuation = "";
+            //string punctuation = "";
+
+            StringBuilder numberOut = new StringBuilder();
+            StringBuilder punctuation = new StringBuilder();
+
+            List<int> joinOut = new List<int>();
 
             try
             {
@@ -476,17 +488,21 @@ namespace Windows_Forms_NED
                         for (int j = 0; j < decryptText.Length; j++)
                         {
                             //Convert input to numbers based on location
-                            numberOut += alphabet.IndexOf(decryptText[j]);
+                            numberOut.Append(alphabet.IndexOf(decryptText[j]));
 
                             //Check if character is punctuation
                             if (alphabet.IndexOf(decryptText[j]) == -1)
                             {
-                                punctuation += decryptText[j];
+                                punctuation.Append(decryptText[j]);
                             }
 
                             //Display Letter Processes
                             form2.IncremProg();
-                            form2.Refresh();
+                            
+                            if(j % 1000 == 0)
+                            {
+                                form2.Update();
+                            }
                         }
 
                         //Clean output
@@ -500,10 +516,11 @@ namespace Windows_Forms_NED
                             if (numberOut[0] != '-')
                             {
                                 //Expand Array 
-                                Array.Resize(ref joinOut, joinOut.Length + 1);
+                                //Array.Resize(ref joinOut, joinOut.Length + 1);
 
                                 //Join 2 Numbers
-                                joinOut[j] = int.Parse(numberOut.Substring(0, 2));
+                                //joinOut[j] = int.Parse(numberOut.ToString().Substring(0, 2));
+                                joinOut.Add(Convert.ToInt32(numberOut.ToString().Substring(0, 2)));
 
                                 //Subtract key
                                 joinOut[j] -= subtractionKey;
@@ -517,7 +534,7 @@ namespace Windows_Forms_NED
                             else
                             {
                                 //Expand Array
-                                Array.Resize(ref joinOut, joinOut.Length + 1);
+                                //Array.Resize(ref joinOut, joinOut.Length + 1);
 
                                 //Remove Punctuation ID
                                 numberOut = numberOut.Remove(0, 2);
@@ -531,8 +548,9 @@ namespace Windows_Forms_NED
                         }
 
                         //Clean Outputs
-                        joinOut = new int[0];
-                        numberOut = "";
+                        joinOut.Clear();
+                        numberOut = new StringBuilder();
+
                         isCompleted = true;
                     }
                     isCompleted = false;
@@ -549,7 +567,6 @@ namespace Windows_Forms_NED
                     MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
             }
             
-            form2.Refresh();
 
             //Close Form
             form2.Close();
@@ -558,10 +575,10 @@ namespace Windows_Forms_NED
             return decryptText;
         }
 
-
         string AsciiEncrypt(string encryptText, int additionKey, int recursion)
         {
             List<int> decimalOut = new List<int>();
+            StringBuilder eText = new StringBuilder(encryptText);
 
             Form2 form2 = new Form2();
             if(preview != true)
@@ -575,11 +592,20 @@ namespace Windows_Forms_NED
                 {
                     while (!bgWorker.CancellationPending && !isCompleted)
                     {
-                        foreach (char c in encryptText)
+                        /*foreach (char c in encryptText)
                         {
                             decimalOut.Add((int)c + additionKey);
                             form2.IncremProg();
-                            form2.Refresh();
+                        }*/
+
+                        for(int j = 0; j < encryptText.Length; j++)
+                        {
+                            decimalOut.Add((int)encryptText[j] + additionKey);
+                            form2.IncremProg();
+                            if (j % 1000 == 0)
+                            {
+                                form2.Update();
+                            }
                         }
 
                         //decimalOut.RemoveAt(0);
@@ -587,10 +613,12 @@ namespace Windows_Forms_NED
 
                         foreach (int dec in decimalOut)
                         {
-                            encryptText += Convert.ToByte(dec).ToString("X");
+                            eText.Append(Convert.ToByte(dec).ToString("X"));
                         }
 
                         decimalOut.Clear();
+                        encryptText = eText.ToString();
+                        eText.Clear();
                         isCompleted = true;
                     }
                     isCompleted = false;
@@ -601,7 +629,7 @@ namespace Windows_Forms_NED
                 MessageBox.Show("A process error occured.", "Error");
             }
 
-            form2.Refresh();
+            form2.Update();
 
             //Close Progress Bar
             form2.Close();
@@ -619,6 +647,9 @@ namespace Windows_Forms_NED
                 form2.Show();
             form2.Refresh();
 
+            Stopwatch st = new Stopwatch();
+            st.Restart();
+
             try
             {
                 for (int j = 0; j < recursion; j++)
@@ -633,8 +664,15 @@ namespace Windows_Forms_NED
                             decryptText = decryptText.Remove(0, 2);
 
                             form2.IncremProg();
-                            form2.Refresh();
+                            
+                            if(i % 100 == 0)
+                            {
+                                form2.Update();
+                            }
                         }
+
+
+                        //form2.Refresh();
 
                         decryptText = "";
 
@@ -666,10 +704,10 @@ namespace Windows_Forms_NED
                 MessageBox.Show("A process error occured.", "Error");
             }
 
-            form2.Refresh();
-
             //Close Progress Bar
             form2.Close();
+
+            st.Stop();
 
             return decryptText;
         }

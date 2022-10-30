@@ -37,8 +37,6 @@ namespace Windows_Forms_NED
             label3.Text = ttCompletion + " Seconds Remaining";
             
         }   
-        
-        // IT DOESN'T BECAUSE THE CODE DOESN'T ALWAYS INCREMENT 
 
         public int TimeLeft()
         {
@@ -61,6 +59,7 @@ namespace Windows_Forms_NED
             }
 
             TimeLeft();
+            //ValidateChildren();
             return ttCompletion;
         }
 
@@ -83,6 +82,8 @@ namespace Windows_Forms_NED
                 label3.Text = ttCompletion.ToString() + " Seconds Remaining";
             }
         }
+
+
     }
 }
 
