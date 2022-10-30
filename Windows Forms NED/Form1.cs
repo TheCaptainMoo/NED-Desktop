@@ -110,9 +110,14 @@ namespace Windows_Forms_NED
             }
         }
 
-        //Export Files
+        //Export Existing Files
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(Usersettings.Default.ShowFileWarn == true)
+            {
+                MessageBox.Show("This will export the existing content. You can disable this alert in options.", "Export Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Generic Text File|*.txt|NED Text File|*.ned";
             sfd.Title = "Export Text";
@@ -136,6 +141,20 @@ namespace Windows_Forms_NED
                         break;
                 }
             }
+        }
+
+        //Process & Export 
+        bool isExporting = false;
+        private void exportToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (Usersettings.Default.ShowFileWarn == true)
+            {
+                MessageBox.Show("This will process the input with the Key and Recursion and export it. You can disable this alert in options.", "Export Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            Decider();
+
+            isExporting = true;
         }
 
         // Apply variables for processing
@@ -221,10 +240,37 @@ namespace Windows_Forms_NED
             {
                 richTextBox2.Text = "Operation Cancelled";
             }
+            else if (isExporting)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "Generic Text File|*.txt|NED Text File|*.ned";
+                sfd.Title = "Export Text";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    switch (sfd.FilterIndex)
+                    {
+                        //Text Files
+                        case 1:
+                            StreamWriter sw = new StreamWriter(sfd.FileName);
+                            sw.Write(e.Result);
+                            sw.Close();
+                            break;
+
+                        //Ned Files
+                        case 2:
+                            StreamWriter sw1 = new StreamWriter(sfd.FileName);
+                            sw1.Write(keyValue.Text + "|" + recursionValue.Text + "|" + richTextBox1.Text + "|" + e.Result + "|" + radioButton4.Checked);
+                            sw1.Close();
+                            break;
+                    }
+                }
+            }
             else if(e.Result != null)
             {
                 richTextBox2.Text = e.Result.ToString();
             }
+            isExporting = false;
         }
 
         void PreviewCalc()
@@ -268,6 +314,12 @@ namespace Windows_Forms_NED
         //Process Info
         void Decider()
         {
+            if(richTextBox1.Text.Length <= 0)
+            {
+                MessageBox.Show("Input Text Cannot Be Null.", "InputText Length Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //Text Length Calculations
             if (radioButton1.Checked)
             {
@@ -576,7 +628,7 @@ namespace Windows_Forms_NED
         string AsciiEncrypt(string encryptText, int additionKey, int recursion)
         {
             List<int> decimalOut = new List<int>();
-            StringBuilder eText = new StringBuilder(encryptText);
+            StringBuilder eText = new StringBuilder();
 
             Form2 form2 = new Form2();
             if(preview != true)
@@ -645,16 +697,12 @@ namespace Windows_Forms_NED
                 form2.Show();
             form2.Refresh();
 
-            Stopwatch st = new Stopwatch();
-            st.Restart();
-
             try
             {
                 for (int j = 0; j < recursion; j++)
                 {
                     while (!bgWorker.CancellationPending && !isCompleted)
                     {
-
                         int outputLength = decryptText.Length / 2;
                         for (int i = 0; i < outputLength; i++)
                         {
@@ -663,14 +711,8 @@ namespace Windows_Forms_NED
 
                             form2.IncremProg();
                             
-                            if(i % 100 == 0)
-                            {
-                                form2.Update();
-                            }
+
                         }
-
-
-                        //form2.Refresh();
 
                         decryptText = "";
 
@@ -697,15 +739,13 @@ namespace Windows_Forms_NED
                     isCompleted = false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("A process error occured.", "Error");
+                MessageBox.Show("A process error occured: " + ex, "Error");
             }
 
             //Close Progress Bar
             form2.Close();
-
-            st.Stop();
 
             return decryptText;
         }

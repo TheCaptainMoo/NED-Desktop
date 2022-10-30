@@ -33,6 +33,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importtxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveExistingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ProcessButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -95,18 +97,38 @@
             this.importtxtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.importtxtToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.importtxtToolStripMenuItem.Name = "importtxtToolStripMenuItem";
-            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importtxtToolStripMenuItem.Text = "Import";
             this.importtxtToolStripMenuItem.Click += new System.EventHandler(this.importtxtToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveExistingToolStripMenuItem,
+            this.exportToolStripMenuItem1});
             this.exportToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
-            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // saveExistingToolStripMenuItem
+            // 
+            this.saveExistingToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.saveExistingToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.saveExistingToolStripMenuItem.Name = "saveExistingToolStripMenuItem";
+            this.saveExistingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveExistingToolStripMenuItem.Text = "Export Existing";
+            this.saveExistingToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem1
+            // 
+            this.exportToolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.exportToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.Window;
+            this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem1.Text = "Process Export ";
+            this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -436,5 +458,7 @@
         private RadioButton radioButton3;
         private RadioButton radioButton4;
         private PictureBox pictureBox1;
+        private ToolStripMenuItem saveExistingToolStripMenuItem;
+        private ToolStripMenuItem exportToolStripMenuItem1;
     }
 }
