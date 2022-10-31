@@ -8,6 +8,7 @@ namespace Windows_Forms_NED
     using System.Threading.Tasks;
     using System.Net;
     using System.Diagnostics;
+    using System.Windows.Forms;
 
     public partial class Form1 : Form
     {
@@ -207,6 +208,7 @@ namespace Windows_Forms_NED
         //Background Worker
         private void bgWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            //richTextBox1.ReadOnly = true;
             if (bgWorker.CancellationPending)
             {
                 e.Cancel = true;
@@ -271,25 +273,33 @@ namespace Windows_Forms_NED
                 richTextBox2.Text = e.Result.ToString();
             }
             isExporting = false;
+            //richTextBox1.ReadOnly = false;
+        }
+
+        //Last inputted character
+        string lastChar;
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            lastChar = e.KeyCode.ToString();
         }
 
         void PreviewCalc()
         {
             if (radioButton1.Checked && radioButton4.Checked)
             {
-                richTextBox2.Text = Encrypt(inputText.ToUpper(), key, recursion);
+                richTextBox2.Text = Encrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.DefaultRec));
             }
             else if (!radioButton1.Checked && radioButton4.Checked)
             {
-                richTextBox2.Text = Decrypt(inputText.ToUpper(), key, recursion);
+                richTextBox2.Text = Decrypt(inputText.ToUpper(), key, Math.Min(recursion, Usersettings.Default.DefaultRec));
             }
             else if (radioButton1.Checked && !radioButton4.Checked)
             {
-                richTextBox2.Text = AsciiEncrypt(inputText, key, recursion);
+                richTextBox2.Text = AsciiEncrypt(inputText, key, Math.Min(recursion, Usersettings.Default.DefaultRec));
             }
             else
             {
-                richTextBox2.Text = AsciiDecrypt(inputText, key, recursion);
+                richTextBox2.Text = AsciiDecrypt(inputText, key, Math.Min(recursion, Usersettings.Default.DefaultRec));
             }
         }
 
@@ -772,6 +782,7 @@ namespace Windows_Forms_NED
 
             return decryptText;
         }
+
 
     }
 }
