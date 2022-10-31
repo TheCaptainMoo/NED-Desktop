@@ -97,7 +97,8 @@
             this.importtxtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.importtxtToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.importtxtToolStripMenuItem.Name = "importtxtToolStripMenuItem";
-            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importtxtToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.importtxtToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.importtxtToolStripMenuItem.Text = "Import";
             this.importtxtToolStripMenuItem.Click += new System.EventHandler(this.importtxtToolStripMenuItem_Click);
             // 
@@ -109,7 +110,7 @@
             this.exportToolStripMenuItem1});
             this.exportToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // saveExistingToolStripMenuItem
@@ -117,7 +118,8 @@
             this.saveExistingToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.saveExistingToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.saveExistingToolStripMenuItem.Name = "saveExistingToolStripMenuItem";
-            this.saveExistingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveExistingToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveExistingToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.saveExistingToolStripMenuItem.Text = "Export Existing";
             this.saveExistingToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -126,7 +128,9 @@
             this.exportToolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.exportToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.Window;
             this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
-            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(226, 22);
             this.exportToolStripMenuItem1.Text = "Process Export ";
             this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
             // 

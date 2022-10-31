@@ -34,6 +34,18 @@ namespace Windows_Forms_NED
             }
         }
 
+        //Exit on ESC
+        private void Form3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if(MessageBox.Show("Are you sure you want to quit settings? Unsaved changes will be lost.", "Close Settings?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Close();
+                }
+            }
+        }
+
         //Loop through all existing elements
         public static IEnumerable<Control> GetAllControls(Control control)
         {

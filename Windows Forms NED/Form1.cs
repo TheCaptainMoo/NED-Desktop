@@ -486,15 +486,17 @@ namespace Windows_Forms_NED
                     isCompleted = false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 //Error Messages
                 if (preview)
                 {
-                    richTextBox2.Text = "Incorrect Recursion Length";
+                    richTextBox2.Text = "An Error Occurred: " + ex;
                 }
                 else
-                    MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
+                {
+                    MessageBox.Show("An Error Occurred: " + ex, "Error");
+                }
             }
             
 
@@ -606,17 +608,19 @@ namespace Windows_Forms_NED
                     isCompleted = false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 //Error Messages
                 if (preview)
                 {
-                    richTextBox2.Text = "Incorrect Recursion Length";
+                    richTextBox2.Text = "An Error Occurred: " + ex;
                 }
                 else
-                    MessageBox.Show("Incorrect Recursion Length", "Recursion Length Error");
+                {
+                    MessageBox.Show("An Error Occurred: " + ex, "Error");
+                }
             }
-            
+
 
             //Close Form
             form2.Close();
@@ -674,9 +678,17 @@ namespace Windows_Forms_NED
                     isCompleted = false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("A process error occured.", "Error");
+                //Error Messages
+                if (preview)
+                {
+                    richTextBox2.Text = "An Error Occurred: " + ex;
+                }
+                else
+                {
+                    MessageBox.Show("An Error Occurred: " + ex, "Error");
+                }
             }
 
             form2.Update();
@@ -744,7 +756,15 @@ namespace Windows_Forms_NED
             }
             catch (Exception ex)
             {
-                MessageBox.Show("A process error occured: " + ex, "Error");
+                //Error Messages
+                if (preview)
+                {
+                    richTextBox2.Text = "An Error Occurred: " + ex;
+                }
+                else
+                {
+                    MessageBox.Show("An Error Occurred: " + ex, "Error");
+                }
             }
 
             //Close Progress Bar

@@ -40,12 +40,14 @@
             this.Save = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.Warnings = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cpw = new System.Windows.Forms.Label();
+            this.OutputWarning = new System.Windows.Forms.RichTextBox();
+            this.ShowFileWarn = new System.Windows.Forms.ComboBox();
             this.Preview = new System.Windows.Forms.TableLayoutPanel();
             this.prl = new System.Windows.Forms.Label();
             this.PreviewRec = new System.Windows.Forms.RichTextBox();
-            this.Warnings = new System.Windows.Forms.TableLayoutPanel();
-            this.cpw = new System.Windows.Forms.Label();
-            this.OutputWarning = new System.Windows.Forms.RichTextBox();
             this.Defaults = new System.Windows.Forms.TableLayoutPanel();
             this.DefaultRec = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,8 +57,8 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.Preview.SuspendLayout();
             this.Warnings.SuspendLayout();
+            this.Preview.SuspendLayout();
             this.Defaults.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,8 +105,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.Preview);
             this.splitContainer1.Panel2.Controls.Add(this.Warnings);
+            this.splitContainer1.Panel2.Controls.Add(this.Preview);
             this.splitContainer1.Panel2.Controls.Add(this.Defaults);
             this.splitContainer1.Size = new System.Drawing.Size(804, 382);
             this.splitContainer1.SplitterDistance = 268;
@@ -143,6 +145,78 @@
             this.treeView1.Size = new System.Drawing.Size(268, 382);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            // 
+            // Warnings
+            // 
+            this.Warnings.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.Warnings.ColumnCount = 2;
+            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.Warnings.Controls.Add(this.label2, 0, 1);
+            this.Warnings.Controls.Add(this.cpw, 0, 0);
+            this.Warnings.Controls.Add(this.OutputWarning, 1, 0);
+            this.Warnings.Controls.Add(this.ShowFileWarn, 1, 1);
+            this.Warnings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Warnings.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.Warnings.Location = new System.Drawing.Point(0, 0);
+            this.Warnings.Name = "Warnings";
+            this.Warnings.RowCount = 3;
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.Warnings.Size = new System.Drawing.Size(532, 382);
+            this.Warnings.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.Window;
+            this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label2.Location = new System.Drawing.Point(5, 29);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(110, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "File Export Warning";
+            // 
+            // cpw
+            // 
+            this.cpw.AutoSize = true;
+            this.cpw.ForeColor = System.Drawing.SystemColors.Window;
+            this.cpw.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.cpw.Location = new System.Drawing.Point(5, 2);
+            this.cpw.Name = "cpw";
+            this.cpw.Size = new System.Drawing.Size(149, 15);
+            this.cpw.TabIndex = 0;
+            this.cpw.Text = "Character Process Warning";
+            // 
+            // OutputWarning
+            // 
+            this.OutputWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.OutputWarning.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.OutputWarning.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.OutputWarning.ForeColor = System.Drawing.SystemColors.Window;
+            this.OutputWarning.Location = new System.Drawing.Point(270, 5);
+            this.OutputWarning.MaxLength = 12;
+            this.OutputWarning.Multiline = false;
+            this.OutputWarning.Name = "OutputWarning";
+            this.OutputWarning.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.OutputWarning.Size = new System.Drawing.Size(257, 19);
+            this.OutputWarning.TabIndex = 2;
+            this.OutputWarning.Text = "1";
+            // 
+            // ShowFileWarn
+            // 
+            this.ShowFileWarn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.ShowFileWarn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ShowFileWarn.ForeColor = System.Drawing.SystemColors.Window;
+            this.ShowFileWarn.FormattingEnabled = true;
+            this.ShowFileWarn.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.ShowFileWarn.Location = new System.Drawing.Point(270, 32);
+            this.ShowFileWarn.Name = "ShowFileWarn";
+            this.ShowFileWarn.Size = new System.Drawing.Size(257, 23);
+            this.ShowFileWarn.TabIndex = 4;
             // 
             // Preview
             // 
@@ -188,51 +262,6 @@
             this.PreviewRec.Size = new System.Drawing.Size(257, 19);
             this.PreviewRec.TabIndex = 2;
             this.PreviewRec.Text = "1";
-            // 
-            // Warnings
-            // 
-            this.Warnings.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.Warnings.ColumnCount = 2;
-            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.Warnings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.Warnings.Controls.Add(this.cpw, 0, 0);
-            this.Warnings.Controls.Add(this.OutputWarning, 1, 0);
-            this.Warnings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Warnings.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.Warnings.Location = new System.Drawing.Point(0, 0);
-            this.Warnings.Name = "Warnings";
-            this.Warnings.RowCount = 3;
-            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.Warnings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.Warnings.Size = new System.Drawing.Size(532, 382);
-            this.Warnings.TabIndex = 3;
-            // 
-            // cpw
-            // 
-            this.cpw.AutoSize = true;
-            this.cpw.ForeColor = System.Drawing.SystemColors.Window;
-            this.cpw.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.cpw.Location = new System.Drawing.Point(5, 2);
-            this.cpw.Name = "cpw";
-            this.cpw.Size = new System.Drawing.Size(149, 15);
-            this.cpw.TabIndex = 0;
-            this.cpw.Text = "Character Process Warning";
-            // 
-            // OutputWarning
-            // 
-            this.OutputWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.OutputWarning.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.OutputWarning.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.OutputWarning.ForeColor = System.Drawing.SystemColors.Window;
-            this.OutputWarning.Location = new System.Drawing.Point(270, 5);
-            this.OutputWarning.MaxLength = 12;
-            this.OutputWarning.Multiline = false;
-            this.OutputWarning.Name = "OutputWarning";
-            this.OutputWarning.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.OutputWarning.Size = new System.Drawing.Size(257, 19);
-            this.OutputWarning.TabIndex = 2;
-            this.OutputWarning.Text = "1";
             // 
             // Defaults
             // 
@@ -317,17 +346,19 @@
             this.Controls.Add(this.Save);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(844, 495);
             this.Name = "Form3";
             this.Text = "Settings";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form3_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.Preview.ResumeLayout(false);
-            this.Preview.PerformLayout();
             this.Warnings.ResumeLayout(false);
             this.Warnings.PerformLayout();
+            this.Preview.ResumeLayout(false);
+            this.Preview.PerformLayout();
             this.Defaults.ResumeLayout(false);
             this.Defaults.PerformLayout();
             this.ResumeLayout(false);
@@ -352,5 +383,7 @@
         private TableLayoutPanel Preview;
         private Label prl;
         private RichTextBox PreviewRec;
+        private Label label2;
+        private ComboBox ShowFileWarn;
     }
 }
