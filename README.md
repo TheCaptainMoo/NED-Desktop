@@ -20,4 +20,4 @@ In order for the NED application to operate properly, [.NET Runtime 6.0.8](https
 - Have fun :D
 
 ## Planned Updates
-- ASCII Support
+- None?
