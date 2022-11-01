@@ -4,17 +4,33 @@ namespace Windows_Forms_NED
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Net;
-    using System.Diagnostics;
     using System.Windows.Forms;
 
     public partial class Form1 : Form
     {
-        public Form1()
+        string[] _args;
+        public Form1(string[] args)
         {
             InitializeComponent();
+            _args = args;
+
+            if (_args.Length > 0)
+            {
+                try
+                {
+                    string[] strings = File.ReadAllText(_args[0]).Split('|');
+                    keyValue.Text = strings[0];
+                    recursionValue.Text = strings[1];
+                    richTextBox1.Text = strings[2];
+                    richTextBox2.Text = strings[3];
+                    radioButton4.Checked = Convert.ToBoolean(strings[4]);
+                    radioButton3.Checked = !Convert.ToBoolean(strings[4]);
+                }
+                catch
+                {
+                    MessageBox.Show("Outdated File or Incorrect Format. Data may be lost. Re-exporting is recommended.", "File Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
 
@@ -32,6 +48,8 @@ namespace Windows_Forms_NED
 
             ToolTip tt = new ToolTip();
             tt.SetToolTip(pictureBox1, "Swap Input/Output");
+
+            
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
