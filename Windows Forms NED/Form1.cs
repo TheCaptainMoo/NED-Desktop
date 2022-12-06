@@ -48,8 +48,6 @@ namespace Windows_Forms_NED
 
             ToolTip tt = new ToolTip();
             tt.SetToolTip(pictureBox1, "Swap Input/Output");
-
-            
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
