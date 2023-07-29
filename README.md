@@ -1,5 +1,5 @@
 # NED (Numeric Entity Doubler) Desktop
-Desktop Version of NED, an (now privated) encryption and decryption algorithm. The desktop application includes added functionality such as file importing and exporting as well as various speed improvements over the original Console.
+Desktop Version of NED, an encryption and decryption algorithm. The desktop application includes added functionality such as file importing and exporting as well as various speed improvements over the original Console.
 
 ## How It Works
 - **Input: Z**
